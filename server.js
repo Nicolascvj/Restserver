@@ -1,6 +1,7 @@
-require('./server/config')
+require('./server/config/config')
 
 const express =require('express');
+const mongoose=require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -11,36 +12,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/usuario',function(req,res){
-  res.json("get Usuario");
-});
+app.use(require('./server/routes/usuario'))
 
-app.post('/usuario',function(req,res){
-    let body=req.body;
+mongoose.connect(
+    'mongodb://localhost:27017/cocoa',
+{useCreateIndex:true,useNewUrlParser:true,useUnifiedTopology:true},
 
-    if(body.nombre === undefined){
-        res.status(400).json({
-            ok: false,
-            mensaje: "El nombre de usuarios es requerido"
-        });
-    }else{
-        res.json({
-            body
-        });
-    }
-});
-    
-app.put('/usuario/:id',function(req,res){
-    let id=req.params.id;
+(err,res)=>{
+if(err) throw err;
 
-    res.json({
-        id
-    });
-});
-       
-app.delete('/usuario',function(req,res){
-    res.json("delete Usuario!");
-});
+console.log('Base de datos ONLINE');
+}
+);
 
 app.listen(process.env.PORT,()=>{
 console.log("Escuchando en el puerto: ",process.env.PORT);
