@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(require('./server/routes/usuario'))
 
 mongoose.connect(
-    'mongodb://localhost:27017/cocoa',
+process.env.URLDB,
 {useCreateIndex:true,useNewUrlParser:true,useUnifiedTopology:true},
 
 (err,res)=>{
