@@ -12,7 +12,9 @@ let verificaToken=(req,res,next)=>{
         if(err){
             return res.status(401).json({
                 ok:false,
-                err
+                err:{
+                    message:'Token no valido'
+                }
             })
         }
 
@@ -22,6 +24,27 @@ let verificaToken=(req,res,next)=>{
 
 }
 
+//===========================
+//Verifica Rol de Administrador
+//===========================
+
+let verificaAdminRole=(req,res,next)=>{
+
+    let usuario=req.usuario;
+
+    if(usuario.role==='ADMIN_ROLE'){
+        next();
+    }else{
+        return res.status(401).json({
+            ok:false,
+            err:{
+                message:'Se requiere de un ROL de administrador'
+            }
+    });
+
+}
+}
 module.exports={
-    verificaToken
+    verificaToken,
+    verificaAdminRole
 }
