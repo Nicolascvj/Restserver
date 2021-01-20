@@ -4,6 +4,7 @@ const uniqueValidator=require('mongoose-unique-validator');
 
 let Schema= mogoose.Schema;
 
+
 let rolesValidos = {
     values:['ADMIN_ROLE','USER_ROLE'],
     message: '{VALUE} no es un rol valido'
@@ -23,7 +24,7 @@ email:{
 },
 password:{
     type:String,
-    required:[true,'E; password es obligatorio']
+    required:[true,'El password es obligatorio']
 },
 img:{
     type:String,
